@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HMAppDelegate.h"
+#import "CHAudioAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([HMAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([CHAudioAppDelegate class]));
     }
 }

@@ -12,15 +12,26 @@
 		4495C18B17AF86E7007469AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C18A17AF86E7007469AE /* UIKit.framework */; };
 		4495C19117AF86E7007469AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4495C18F17AF86E7007469AE /* InfoPlist.strings */; };
 		4495C19317AF86E7007469AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C19217AF86E7007469AE /* main.m */; };
-		4495C19717AF86E7007469AE /* HMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C19617AF86E7007469AE /* HMAppDelegate.m */; };
+		4495C19717AF86E7007469AE /* CHAudioAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C19617AF86E7007469AE /* CHAudioAppDelegate.m */; };
 		4495C19A17AF86E7007469AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4495C19817AF86E7007469AE /* Main.storyboard */; };
-		4495C19D17AF86E7007469AE /* HMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C19C17AF86E7007469AE /* HMViewController.m */; };
+		4495C19D17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C19C17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.m */; };
 		4495C19F17AF86E7007469AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4495C19E17AF86E7007469AE /* Images.xcassets */; };
 		4495C1A617AF86E7007469AE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C1A517AF86E7007469AE /* XCTest.framework */; };
 		4495C1A717AF86E7007469AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C18617AF86E7007469AE /* Foundation.framework */; };
 		4495C1A817AF86E7007469AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C18A17AF86E7007469AE /* UIKit.framework */; };
 		4495C1B017AF86E7007469AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1AE17AF86E7007469AE /* InfoPlist.strings */; };
 		4495C1B217AF86E7007469AE /* AudioPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C1B117AF86E7007469AE /* AudioPlayerTests.m */; };
+		4495C1BC17AF873E007469AE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C1BB17AF873E007469AE /* AVFoundation.framework */; };
+		4495C1BE17AF8972007469AE /* Holocene.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1BD17AF876E007469AE /* Holocene.m4a */; };
+		4495C1C117AF9571007469AE /* NSMutableArray+CHQueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C1C017AF9571007469AE /* NSMutableArray+CHQueueAdditions.m */; };
+		4495C1C317AFC508007469AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C1C217AFC508007469AE /* MediaPlayer.framework */; };
+		4495C1CE17B04F7A007469AE /* CHAudioToolboxExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4495C1CD17B04F7A007469AE /* CHAudioToolboxExampleViewController.m */; };
+		4495C1D017B0536F007469AE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4495C1CF17B0536F007469AE /* AudioToolbox.framework */; };
+		4495C1D317B053B0007469AE /* tap.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1D217B053AA007469AE /* tap.aif */; };
+		4495C1D717B062CA007469AE /* smb1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1D417B062CA007469AE /* smb1.caf */; };
+		4495C1D817B062CA007469AE /* smb2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1D517B062CA007469AE /* smb2.caf */; };
+		4495C1D917B062CA007469AE /* smb3.caf in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1D617B062CA007469AE /* smb3.caf */; };
+		4495C1DC17B06482007469AE /* UntrustUs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4495C1DB17B06482007469AE /* UntrustUs.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,17 +53,30 @@
 		4495C19017AF86E7007469AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4495C19217AF86E7007469AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4495C19417AF86E7007469AE /* AudioPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioPlayer-Prefix.pch"; sourceTree = "<group>"; };
-		4495C19517AF86E7007469AE /* HMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAppDelegate.h; sourceTree = "<group>"; };
-		4495C19617AF86E7007469AE /* HMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAppDelegate.m; sourceTree = "<group>"; };
+		4495C19517AF86E7007469AE /* CHAudioAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHAudioAppDelegate.h; sourceTree = "<group>"; };
+		4495C19617AF86E7007469AE /* CHAudioAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHAudioAppDelegate.m; sourceTree = "<group>"; };
 		4495C19917AF86E7007469AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4495C19B17AF86E7007469AE /* HMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMViewController.h; sourceTree = "<group>"; };
-		4495C19C17AF86E7007469AE /* HMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMViewController.m; sourceTree = "<group>"; };
+		4495C19B17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHAVAudioPlayerExampleViewController.h; sourceTree = "<group>"; };
+		4495C19C17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHAVAudioPlayerExampleViewController.m; sourceTree = "<group>"; };
 		4495C19E17AF86E7007469AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4495C1A417AF86E7007469AE /* AudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4495C1A517AF86E7007469AE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4495C1AD17AF86E7007469AE /* AudioPlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioPlayerTests-Info.plist"; sourceTree = "<group>"; };
 		4495C1AF17AF86E7007469AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4495C1B117AF86E7007469AE /* AudioPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerTests.m; sourceTree = "<group>"; };
+		4495C1BB17AF873E007469AE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4495C1BD17AF876E007469AE /* Holocene.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Holocene.m4a; sourceTree = "<group>"; };
+		4495C1BF17AF9571007469AE /* NSMutableArray+CHQueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+CHQueueAdditions.h"; sourceTree = "<group>"; };
+		4495C1C017AF9571007469AE /* NSMutableArray+CHQueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+CHQueueAdditions.m"; sourceTree = "<group>"; };
+		4495C1C217AFC508007469AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4495C1CC17B04F7A007469AE /* CHAudioToolboxExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHAudioToolboxExampleViewController.h; sourceTree = "<group>"; };
+		4495C1CD17B04F7A007469AE /* CHAudioToolboxExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHAudioToolboxExampleViewController.m; sourceTree = "<group>"; };
+		4495C1CF17B0536F007469AE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4495C1D217B053AA007469AE /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
+		4495C1D417B062CA007469AE /* smb1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = smb1.caf; sourceTree = "<group>"; };
+		4495C1D517B062CA007469AE /* smb2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = smb2.caf; sourceTree = "<group>"; };
+		4495C1D617B062CA007469AE /* smb3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = smb3.caf; sourceTree = "<group>"; };
+		4495C1DB17B06482007469AE /* UntrustUs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = UntrustUs.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4495C1D017B0536F007469AE /* AudioToolbox.framework in Frameworks */,
+				4495C1C317AFC508007469AE /* MediaPlayer.framework in Frameworks */,
+				4495C1BC17AF873E007469AE /* AVFoundation.framework in Frameworks */,
 				4495C18917AF86E7007469AE /* CoreGraphics.framework in Frameworks */,
 				4495C18B17AF86E7007469AE /* UIKit.framework in Frameworks */,
 				4495C18717AF86E7007469AE /* Foundation.framework in Frameworks */,
@@ -101,6 +128,9 @@
 		4495C18517AF86E7007469AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4495C1CF17B0536F007469AE /* AudioToolbox.framework */,
+				4495C1C217AFC508007469AE /* MediaPlayer.framework */,
+				4495C1BB17AF873E007469AE /* AVFoundation.framework */,
 				4495C18617AF86E7007469AE /* Foundation.framework */,
 				4495C18817AF86E7007469AE /* CoreGraphics.framework */,
 				4495C18A17AF86E7007469AE /* UIKit.framework */,
@@ -112,12 +142,13 @@
 		4495C18C17AF86E7007469AE /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				4495C19517AF86E7007469AE /* HMAppDelegate.h */,
-				4495C19617AF86E7007469AE /* HMAppDelegate.m */,
+				4495C1DE17B07377007469AE /* Catagories */,
+				4495C1DD17B0727C007469AE /* Controllers */,
+				4495C19517AF86E7007469AE /* CHAudioAppDelegate.h */,
+				4495C19617AF86E7007469AE /* CHAudioAppDelegate.m */,
 				4495C19817AF86E7007469AE /* Main.storyboard */,
-				4495C19B17AF86E7007469AE /* HMViewController.h */,
-				4495C19C17AF86E7007469AE /* HMViewController.m */,
 				4495C19E17AF86E7007469AE /* Images.xcassets */,
+				4495C1C417B04EEE007469AE /* Resources */,
 				4495C18D17AF86E7007469AE /* Supporting Files */,
 			);
 			path = AudioPlayer;
@@ -150,6 +181,55 @@
 				4495C1AE17AF86E7007469AE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4495C1C417B04EEE007469AE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4495C1DA17B06474007469AE /* music */,
+				4495C1C517B04EF6007469AE /* tones */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4495C1C517B04EF6007469AE /* tones */ = {
+			isa = PBXGroup;
+			children = (
+				4495C1D417B062CA007469AE /* smb1.caf */,
+				4495C1D517B062CA007469AE /* smb2.caf */,
+				4495C1D617B062CA007469AE /* smb3.caf */,
+				4495C1D217B053AA007469AE /* tap.aif */,
+			);
+			name = tones;
+			sourceTree = "<group>";
+		};
+		4495C1DA17B06474007469AE /* music */ = {
+			isa = PBXGroup;
+			children = (
+				4495C1BD17AF876E007469AE /* Holocene.m4a */,
+				4495C1DB17B06482007469AE /* UntrustUs.mp3 */,
+			);
+			name = music;
+			sourceTree = "<group>";
+		};
+		4495C1DD17B0727C007469AE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4495C19B17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.h */,
+				4495C19C17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.m */,
+				4495C1CC17B04F7A007469AE /* CHAudioToolboxExampleViewController.h */,
+				4495C1CD17B04F7A007469AE /* CHAudioToolboxExampleViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4495C1DE17B07377007469AE /* Catagories */ = {
+			isa = PBXGroup;
+			children = (
+				4495C1BF17AF9571007469AE /* NSMutableArray+CHQueueAdditions.h */,
+				4495C1C017AF9571007469AE /* NSMutableArray+CHQueueAdditions.m */,
+			);
+			name = Catagories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +276,7 @@
 		4495C17B17AF86E7007469AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = HM;
+				CLASSPREFIX = CH;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Hydric Media Pty Ltd";
 				TargetAttributes = {
@@ -229,9 +309,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4495C1D717B062CA007469AE /* smb1.caf in Resources */,
+				4495C1DC17B06482007469AE /* UntrustUs.mp3 in Resources */,
+				4495C1D917B062CA007469AE /* smb3.caf in Resources */,
+				4495C1D317B053B0007469AE /* tap.aif in Resources */,
+				4495C1BE17AF8972007469AE /* Holocene.m4a in Resources */,
 				4495C19F17AF86E7007469AE /* Images.xcassets in Resources */,
 				4495C19117AF86E7007469AE /* InfoPlist.strings in Resources */,
 				4495C19A17AF86E7007469AE /* Main.storyboard in Resources */,
+				4495C1D817B062CA007469AE /* smb2.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,9 +336,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4495C19D17AF86E7007469AE /* HMViewController.m in Sources */,
+				4495C1C117AF9571007469AE /* NSMutableArray+CHQueueAdditions.m in Sources */,
+				4495C19D17AF86E7007469AE /* CHAVAudioPlayerExampleViewController.m in Sources */,
 				4495C19317AF86E7007469AE /* main.m in Sources */,
-				4495C19717AF86E7007469AE /* HMAppDelegate.m in Sources */,
+				4495C19717AF86E7007469AE /* CHAudioAppDelegate.m in Sources */,
+				4495C1CE17B04F7A007469AE /* CHAudioToolboxExampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +466,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayer/AudioPlayer-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayer/AudioPlayer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -391,6 +480,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioPlayer/AudioPlayer-Prefix.pch";
 				INFOPLIST_FILE = "AudioPlayer/AudioPlayer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -455,6 +545,7 @@
 				4495C1B717AF86E7007469AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4495C1B817AF86E7007469AE /* Build configuration list for PBXNativeTarget "AudioPlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +554,7 @@
 				4495C1BA17AF86E7007469AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
