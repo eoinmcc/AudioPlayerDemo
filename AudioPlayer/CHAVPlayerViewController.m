@@ -54,27 +54,28 @@
     [self.player play];
     [self.player.currentItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
     
-    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(5, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(5, 100) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         CMTimeShow(time);
     }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         if([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
-            self.state.text = self.player.currentItem.playbackLikelyToKeepUp ? @"Will Keep Up" : @"Won't keep up";
+            self.state.text = weakSelf.player.currentItem.playbackLikelyToKeepUp ? @"Will Keep Up" : @"Won't keep up";
         } else {
-            switch(self.player.status) {
+            switch(weakSelf.player.status) {
                 case AVPlayerStatusFailed:
-                    self.state.text = @"Failed";
+                    weakSelf.state.text = @"Failed";
                     break;
                 case AVPlayerStatusReadyToPlay:
-                    self.state.text = @"Ready to Play";
-                    self.playButton.enabled = YES;
+                    weakSelf.state.text = @"Ready to Play";
+                    weakSelf.playButton.enabled = YES;
                     break;
                 case AVPlayerStatusUnknown:
-                    self.state.text = @"Unknown";
+                    weakSelf.state.text = @"Unknown";
             }
         }
     });

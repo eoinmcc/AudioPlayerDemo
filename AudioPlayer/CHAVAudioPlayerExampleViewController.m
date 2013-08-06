@@ -14,11 +14,11 @@
 #import "NSMutableArray+CHQueueAdditions.h"
 
 
-#define NUM_OF_FRAMES 120.
+#define NUM_OF_FRAMES 40.
 
-#define USE_MPVOLUME 0
+#define USE_MPVOLUME 1
 
-#define USE_MPNOWPLAYING 0
+#define USE_MPNOWPLAYING 1
 
 @interface CHAVAudioPlayerExampleViewController () <MPMediaPickerControllerDelegate, UIAlertViewDelegate>
 
@@ -73,9 +73,9 @@
 
 - (void)refresh
 {
-    [_player updateMeters];
+    [self.player updateMeters];
     
-    for(int i=0;i<[_player numberOfChannels];i++) {
+    for(int i=0;i<[self.player numberOfChannels];i++) {
         [self drawPath:i];
     }
 }
@@ -97,58 +97,22 @@
     [self.graphView.layer addSublayer:leftLayer];
     [self.graphView.layer addSublayer:rightLayer];
     
-    _layers = @[leftLayer, rightLayer];
+    self.layers = @[leftLayer, rightLayer];
 }
 
-- (void)drawPath:(NSInteger)channel
-{
-    NSMutableArray* frames = [self.framesArr objectAtIndex:channel];
-    float dbs = [_player averagePowerForChannel:channel];
-    float unitDbs = 1.-logx(-dbs, 160.);
-    unitDbs = MIN(1., unitDbs);
-    unitDbs = unitDbs-0.3f;
 
-    [frames dequeue];
-    [frames enqueue:[NSNumber numberWithFloat:unitDbs]];
-    
-    UIBezierPath *path = [[UIBezierPath alloc] init];
-    
-    float BASELINE_OFFSET = 180.;
-    float LENGTH = 300.;
-    float DRAWABLE_LENGTH = 250.;
-    float MAX_HEIGHT = 200.0f;
-    
-    [path moveToPoint:CGPointMake(10., BASELINE_OFFSET)];
-    
-    float increment = DRAWABLE_LENGTH/frames.count;
-    
-    for(int i=0;i<frames.count;i++) {
-        float level = [[frames objectAtIndex:i] floatValue];
-        float damping = logx(i+1, NUM_OF_FRAMES);
-        float yOffset = level*MAX_HEIGHT*damping;
-        yOffset = -yOffset;
-        [path addLineToPoint:CGPointMake(10.+increment*i, BASELINE_OFFSET + yOffset) ];
-    }
-    
-    
-    [path addLineToPoint:CGPointMake(10.+LENGTH, BASELINE_OFFSET)];
-    [path addLineToPoint:CGPointMake(10., BASELINE_OFFSET)];
-    
-    CAShapeLayer* layer = [_layers objectAtIndex:channel];
-    layer.path = [path CGPath];
-}
 
 - (void)play:(NSURL*)fileURL
 {
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
     self.player.meteringEnabled = YES;
-//#if MPNOWPLAYING
+#if USE_MPNOWPLAYING
     MPNowPlayingInfoCenter* infoCenter = [MPNowPlayingInfoCenter defaultCenter];
     MPMediaItemArtwork* cover = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"hydric-app-icon"]];
     
     NSDictionary* infoDict = @{MPMediaItemPropertyArtist : @"Hydric Media", MPMediaItemPropertyTitle : @"Track Title", MPMediaItemPropertyArtwork : cover};
     [infoCenter setNowPlayingInfo:infoDict];
-//#endif
+#endif
     [self start];
 }
 
@@ -158,21 +122,22 @@
        [self.player pause];
     } else {
         [self.player play];
+        [self.player setRate:0.0];
     }
     
 }
 - (void)stop
 {
-    [_updateTimer invalidate];
-    [_player stop];
+    [self.updateTimer invalidate];
+    [self.player stop];
 }
 
 - (void)start
 {
-    if (_updateTimer) [_updateTimer invalidate];
-    _updateTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(refresh)];
-    [_updateTimer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [_player play];
+    if (self.updateTimer) [self.updateTimer invalidate];
+    self.updateTimer = [CADisplayLink displayLinkWithTarget:self selector:@selector(refresh)];
+    [self.updateTimer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.player play];
 }
 
 float logx(float value, float base)
@@ -212,11 +177,49 @@ float logx(float value, float base)
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"UntrustUs" ofType:@"mp3"];
-//    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"Holocene" ofType:@"m4a"];
+//    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"UntrustUs" ofType:@"mp3"];
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"Holocene" ofType:@"m4a"];
     NSURL* url = [[NSURL alloc] initFileURLWithPath:filepath];
     [self play:url];
 
+}
+
+- (void)drawPath:(NSInteger)channel
+{
+    NSMutableArray* frames = [self.framesArr objectAtIndex:channel];
+    float dbs = [self.player averagePowerForChannel:channel];
+    float unitDbs = 1.-logx(-dbs, 160.);
+    unitDbs = MIN(1., unitDbs);
+    unitDbs = unitDbs-0.3f;
+    
+    [frames dequeue];
+    [frames enqueue:[NSNumber numberWithFloat:unitDbs]];
+    
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+    
+    float BASELINE_OFFSET = 180.;
+    float LENGTH = 300.;
+    float DRAWABLE_LENGTH = 250.;
+    float MAX_HEIGHT = 200.0f;
+    
+    [path moveToPoint:CGPointMake(10., BASELINE_OFFSET)];
+    
+    float increment = DRAWABLE_LENGTH/frames.count;
+    
+    for(int i=0;i<frames.count;i++) {
+        float level = [[frames objectAtIndex:i] floatValue];
+        float damping = logx(i+1, NUM_OF_FRAMES);
+        float yOffset = level*MAX_HEIGHT*damping;
+        yOffset = -yOffset;
+        [path addLineToPoint:CGPointMake(10.+increment*i, BASELINE_OFFSET + yOffset) ];
+    }
+    
+    
+    [path addLineToPoint:CGPointMake(10.+LENGTH, BASELINE_OFFSET)];
+    [path addLineToPoint:CGPointMake(10., BASELINE_OFFSET)];
+    
+    CAShapeLayer* layer = [self.layers objectAtIndex:channel];
+    layer.path = [path CGPath];
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent*)receivedEvent {

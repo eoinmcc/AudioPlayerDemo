@@ -61,9 +61,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    AudioServicesDisposeSystemSoundID(_jump);
-    AudioServicesDisposeSystemSoundID(_coin);
-    AudioServicesDisposeSystemSoundID(_mushroom);
+    AudioServicesDisposeSystemSoundID(self.jump);
+    AudioServicesDisposeSystemSoundID(self.coin);
+    AudioServicesDisposeSystemSoundID(self.mushroom);
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,13 +76,13 @@
 {
     switch ([sender tag]) {
         case 0:
-            AudioServicesPlayAlertSound(_jump);
+            AudioServicesPlayAlertSound(self.jump);
             break;
         case 1:
-            AudioServicesPlaySystemSound(_coin);
+            AudioServicesPlaySystemSound(self.coin);
             break;
         case 2:
-            AudioServicesPlaySystemSound(_mushroom);
+            AudioServicesPlaySystemSound(self.mushroom);
             break;
         case 3:
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);

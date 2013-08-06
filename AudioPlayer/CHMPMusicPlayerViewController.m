@@ -21,7 +21,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -29,9 +28,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    self.player = [MPMusicPlayerController applicationMusicPlayer];
     self.player = [MPMusicPlayerController iPodMusicPlayer];
-
-	// Do any additional setup after loading the view.
 }
 
 - (IBAction)back:(id)sender
