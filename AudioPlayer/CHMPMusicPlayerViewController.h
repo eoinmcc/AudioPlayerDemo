@@ -1,5 +1,5 @@
 //
-//  CHAudioToolboxExampleViewController.h
+//  CHMPMusicPlayerViewController.h
 //  AudioPlayer
 //
 //  Created by Eoin McCarthy on 6/08/13.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AudioToolbox/AudioToolbox.h>
 
-@interface CHAudioToolboxExampleViewController : UIViewController 
+@interface CHMPMusicPlayerViewController : UIViewController
 
 @end

@@ -27,8 +27,6 @@
     if (self) {
         // Custom initialization
     }
-//    NSString* filename = [NSString stringWithFormat:@"smb%d",tag];
-    
 
     return self;
 }
@@ -42,19 +40,13 @@
     
     CFURLRef soundFileURLRef = (__bridge CFURLRef)(tapSound);
     
-    AudioServicesCreateSystemSoundID (
-                                      soundFileURLRef,
-                                      &_jump
-                                      );
+    AudioServicesCreateSystemSoundID (soundFileURLRef,&_jump);
     tapSound   = [[NSBundle mainBundle] URLForResource: @"smb2"
                                                 withExtension: @"caf"];
     
     soundFileURLRef = (__bridge CFURLRef)(tapSound);
     
-    AudioServicesCreateSystemSoundID (
-                                      soundFileURLRef,
-                                      &_coin
-                                      );
+    AudioServicesCreateSystemSoundID (soundFileURLRef, &_coin);
     tapSound   = [[NSBundle mainBundle] URLForResource: @"smb3"
                                          withExtension: @"caf"];
     
@@ -87,17 +79,16 @@
             AudioServicesPlayAlertSound(_jump);
             break;
         case 1:
-            AudioServicesPlayAlertSound(_coin);
+            AudioServicesPlaySystemSound(_coin);
             break;
         case 2:
-            AudioServicesPlayAlertSound(_mushroom);
+            AudioServicesPlaySystemSound(_mushroom);
+            break;
+        case 3:
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
             break;
         default:
             break;
     }
-
-
-    
-    
 }
 @end

@@ -14,12 +14,16 @@
 #import "NSMutableArray+CHQueueAdditions.h"
 
 
+#define NUM_OF_FRAMES 120.
+
+#define USE_MPVOLUME 0
+
+#define USE_MPNOWPLAYING 0
 
 @interface CHAVAudioPlayerExampleViewController () <MPMediaPickerControllerDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) CADisplayLink	*updateTimer;
-
+@property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) NSArray *layers;
 @property (nonatomic, strong) NSMutableArray *framesLeft;
 @property (nonatomic, strong) NSMutableArray *framesRight;
@@ -35,36 +39,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//	[[AVAudioSession sharedInstance] setDelegate: self];
 	NSError *setCategoryError = nil;
-	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
+	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error: &setCategoryError];
     self.framesLeft = [NSMutableArray array];
     self.framesRight = [NSMutableArray array];
     
-    for(int i=0;i<200;i++) {
+    for(int i=0;i<NUM_OF_FRAMES;i++) {
         [self.framesLeft insertObject:[NSNumber numberWithFloat:0.] atIndex:i];
         [self.framesRight insertObject:[NSNumber numberWithFloat:0.] atIndex:i];
     }
     self.framesArr = @[self.framesLeft, self.framesRight];
     [self setupLayers];
     
+#if USE_MPVOLUME
     self.mpVolumeViewParentView.backgroundColor = [UIColor clearColor];
-    MPVolumeView *myVolumeView =
-    [[MPVolumeView alloc] initWithFrame:self.mpVolumeViewParentView.bounds];
+    MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame:self.mpVolumeViewParentView.bounds];
+    myVolumeView.showsRouteButton = YES;
     [self.mpVolumeViewParentView addSubview:myVolumeView];
+#endif
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(play) name:@"play" object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self stop];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)refresh
@@ -83,11 +87,11 @@
     
     [leftLayer setStrokeColor:[[UIColor colorWithRed:20./255. green:20./255. blue:240./255. alpha:1.0] CGColor]];
         leftLayer.lineWidth = 1.f;
-    leftLayer.fillColor = [[UIColor clearColor] CGColor];
+    leftLayer.fillColor = leftLayer.strokeColor;
     
     [rightLayer setStrokeColor:[[UIColor colorWithRed:240./255. green:20./255. blue:20./255. alpha:1.0] CGColor]];
     rightLayer.lineWidth = 1.f;
-    rightLayer.fillColor = [[UIColor clearColor] CGColor];
+    rightLayer.fillColor = [[UIColor colorWithRed:240./255. green:20./255. blue:20./255. alpha:0.3] CGColor];
 
     
     [self.graphView.layer addSublayer:leftLayer];
@@ -100,33 +104,29 @@
 {
     NSMutableArray* frames = [self.framesArr objectAtIndex:channel];
     float dbs = [_player averagePowerForChannel:channel];
-    float unitDbs = logx(-dbs, 160.);
+    float unitDbs = 1.-logx(-dbs, 160.);
+    unitDbs = MIN(1., unitDbs);
+    unitDbs = unitDbs-0.3f;
 
-    unitDbs = MAX(0, unitDbs);
-    NSLog(@"%g",unitDbs);
     [frames dequeue];
     [frames enqueue:[NSNumber numberWithFloat:unitDbs]];
     
     UIBezierPath *path = [[UIBezierPath alloc] init];
     
-    float BASELINE_OFFSET = 100.;
+    float BASELINE_OFFSET = 180.;
     float LENGTH = 300.;
-    float MAX_HEIGHT = 100.0f;
-    float EXAGGERATION = 2.f;
+    float DRAWABLE_LENGTH = 250.;
+    float MAX_HEIGHT = 200.0f;
     
     [path moveToPoint:CGPointMake(10., BASELINE_OFFSET)];
     
-    float increment = LENGTH/frames.count;
+    float increment = DRAWABLE_LENGTH/frames.count;
     
     for(int i=0;i<frames.count;i++) {
         float level = [[frames objectAtIndex:i] floatValue];
-        float damping = frames.count-i;
-        damping = 1.0f;
-
-        float yOffset = EXAGGERATION*50. - EXAGGERATION*level*MAX_HEIGHT/damping;
-        
-        yOffset = MAX(-yOffset, 0.);
-        yOffset = channel == 0 ? yOffset : -yOffset;
+        float damping = logx(i+1, NUM_OF_FRAMES);
+        float yOffset = level*MAX_HEIGHT*damping;
+        yOffset = -yOffset;
         [path addLineToPoint:CGPointMake(10.+increment*i, BASELINE_OFFSET + yOffset) ];
     }
     
@@ -138,7 +138,29 @@
     layer.path = [path CGPath];
 }
 
+- (void)play:(NSURL*)fileURL
+{
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    self.player.meteringEnabled = YES;
+//#if MPNOWPLAYING
+    MPNowPlayingInfoCenter* infoCenter = [MPNowPlayingInfoCenter defaultCenter];
+    MPMediaItemArtwork* cover = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"hydric-app-icon"]];
+    
+    NSDictionary* infoDict = @{MPMediaItemPropertyArtist : @"Hydric Media", MPMediaItemPropertyTitle : @"Track Title", MPMediaItemPropertyArtwork : cover};
+    [infoCenter setNowPlayingInfo:infoDict];
+//#endif
+    [self start];
+}
 
+- (void)togglePlayPause
+{
+    if(self.player.isPlaying) {
+       [self.player pause];
+    } else {
+        [self.player play];
+    }
+    
+}
 - (void)stop
 {
     [_updateTimer invalidate];
@@ -161,7 +183,7 @@ float logx(float value, float base)
 - (IBAction)setTrack:(id)sender
 {
     [self stop];
-#ifdef TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"This needs a real device" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     [alert show];
     
@@ -178,22 +200,42 @@ float logx(float value, float base)
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
 {
-    
+    MPMediaItem* item = [[mediaItemCollection items] lastObject];
+    [self play:[item valueForProperty:MPMediaItemPropertyAssetURL]];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
 {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-//    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"UntrustUs" ofType:@"mp3"];
-    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"Holocene" ofType:@"m4a"];
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"UntrustUs" ofType:@"mp3"];
+//    NSString* filepath = [[NSBundle mainBundle] pathForResource:@"Holocene" ofType:@"m4a"];
     NSURL* url = [[NSURL alloc] initFileURLWithPath:filepath];
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    self.player.meteringEnabled = YES;    
-    [self start];
+    [self play:url];
 
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent*)receivedEvent {
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        switch (receivedEvent.subtype) {
+            case UIEventSubtypeRemoteControlPlay:
+                [self togglePlayPause];
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self togglePlayPause];
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 @end
